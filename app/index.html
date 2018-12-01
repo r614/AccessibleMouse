@@ -14,16 +14,30 @@
       </div>
       <div class="settings-list">
         <div class="setting">
-          Mouse sensitivity:
+          Sensitivity:
+          <input type="range" min="0" max="127" value="64" class="slider">
+          <div>
+            <ul class="slider-labels">
+              <li>Slowest</li>
+              <li>Average</li>
+              <li>Fastest</li>
+            </ul>
+          </div>
         </div>
         <div class="setting">
-          Custom command 1:
-        </div>
-        <div class="setting">
-          Custom command 2:
-        </div>
-        <div class="setting">
-          Custom command 3:
+          Shortcuts:
+          <div class=sub-setting>
+            Double sip:
+            <input type="text" name="cmd1" class="shortcut">
+          </div>
+          <div class="sub-setting">
+            Sip-puff:
+            <input type="text" name="cmd2" class="shortcut">
+          </div>
+          <div class="sub-setting">
+            Puff-sip:
+            <input type="text" name="cmd3" class="shortcut">
+          </div>
         </div>
       </div>
     </div>

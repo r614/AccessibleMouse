@@ -2,9 +2,9 @@
 @import url('https://fonts.googleapis.come/css?family=Oswald');
 
 :root {
-  --dark-bg: #6bb1ff;
-  --mid-bg: #b7f2ff;
-  --light-bg: #e8eff0;
+  --background: #255a96;
+  --accent-light: #54bad0;
+  --accent-other: #2e8982;
 }
 
 html, body {
@@ -13,7 +13,7 @@ html, body {
   padding: 0;
   height: 100%;
   width: 100%;
-  background: var(--dark-bg);
+  background: var(--background);
 }
 
 .setting-block{
@@ -22,7 +22,7 @@ html, body {
 
 .section-title{
 	font-size: 32px;
-	color: black;
+	color: white;
 	font-weight: bold;
 }
 
@@ -31,5 +31,74 @@ html, body {
 }
 
 .setting{
-	padding: 2px 0px;
+	padding: 12px 0px;
+	font-size: 28px;
+	color: white;
+}
+
+.sub-setting{
+	font-size: 24px;
+	color: white;
+	padding: 4px 16px;
+}
+
+.slider{
+	position: absolute;
+	left: 30%;
+	-webkit-appearance: none; /* Override defualt css */
+	appearance: none;
+	opacity: 0.7;
+	height: 16px;
+	width: 60%;
+	border-radius: 5px;
+	-webkit-transition: .2s;
+	transition: opacity .2s;
+	background: var(--accent-light);
+}
+
+.slider::-webkit-slider-thumb{
+	-webkit-appearance: none;
+	appearance: none;
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
+	background: var(--accent-other);
+}
+
+input:hover{
+	opacity: 1;
+}
+
+.shortcut{
+	position: absolute;
+	left: 30%;
+	width: 60%;
+	-webkit-appearance: none; /* Override defualt css */
+	appearance: none;
+	outline: none;
+	border: none;
+	border-radius: 5px;
+	font-size: 20px;
+	opacity: 0.7;
+	background: var(--accent-light);
+}
+
+ul{
+	padding: 0;
+	margin: 0;
+	display: flex;
+	align-items: stretch;
+	justify-content: space-between;
+	font-size: 12px;
+	position: absolute;
+	left: 30%;
+	vertical-align: center;
+	color: white;
+	width: 60%;
+}
+
+li{
+	position: relative;
+	float: left;
+	list-style-type: none;
 }
