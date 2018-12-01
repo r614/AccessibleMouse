@@ -4,7 +4,9 @@
   "description": "Mouth operated computer mouse for people with limited mobility",
   "main": "main.js",
   "scripts": {
-    "test": "test"
+    "test": "test",
+    "start": "electron .",
+    "build": "electron-packager . Test --all --overwrite --out build"
   },
   "repository": {
     "type": "git",
@@ -15,5 +17,14 @@
   "bugs": {
     "url": "https://github.com/BenGHolmes/AccessibleMouse/issues"
   },
-  "homepage": "https://github.com/BenGHolmes/AccessibleMouse#readme"
+  "homepage": "https://github.com/BenGHolmes/AccessibleMouse#readme",
+  "devDependencies": {
+    "electron": "^3.0.10",
+    "electron-rebuild": "^1.8.2"
+  },
+  "dependencies": {
+    "bindings": "^1.3.1",
+    "electron-prebuilt": "^1.4.13",
+    "serialport": "^7.1.0"
+  }
 }
