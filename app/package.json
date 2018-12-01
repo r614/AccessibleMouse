@@ -1,0 +1,19 @@
+{
+  "name": "accessiblemouse",
+  "version": "1.0.0",
+  "description": "Mouth operated computer mouse for people with limited mobility",
+  "main": "main.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BenGHolmes/AccessibleMouse.git"
+  },
+  "author": "Ben, Kevin, Jack, Roshan",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/BenGHolmes/AccessibleMouse/issues"
+  },
+  "homepage": "https://github.com/BenGHolmes/AccessibleMouse#readme"
+}
