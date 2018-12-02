@@ -22,8 +22,9 @@
   This example code is in the public domain.
   http://www.arduino.cc/en/Tutorial/JoystickMouseControl
 */
-#include <Mouse.h>
+#include <Mouse.h>        
 #include <mpx5700.h>
+#include <Keyboard.h>
 
 //Call the first instance of the class so you have the ability to call built in functions of library
 mpx5700 mpx;
@@ -34,6 +35,7 @@ mpx5700 mpx;
 int sensorPin = A0;    // Select input pin for the pressure sensor
 int sensorValue = 0;   // Variable stores value coming from the sensor
 boolean didClick = false;
+boolean scrollMode = false;
 
 // set pin numbers for switch, joystick axes, and LED:
 const int switchPin = 2;      // switch to turn on and off mouse control
@@ -57,6 +59,7 @@ void setup() {
   pinMode(ledPin, OUTPUT);         // the LED pin
   // take control of the mouse:
   Mouse.begin();
+  
 }
 
 void loop() {
@@ -66,63 +69,65 @@ void loop() {
    
   } else {
   
-    if (voltageReading < 34 && voltageReading > 29){
-      if(Mouse.isPressed(MOUSE_LEFT)) {
-        Mouse.release(MOUSE_LEFT);
-      }
-      if(Mouse.isPressed(MOUSE_RIGHT)) {
-        Mouse.release(MOUSE_RIGHT);
-      }
+    if (voltageReading < 33 && voltageReading > 29){
       didClick = false; 
   }
-    if (voltageReading > 34 && didClick == false) {
-      Mouse.press(MOUSE_LEFT);
+    if (voltageReading > 33 && didClick == false) {
+      Mouse.click(MOUSE_LEFT);
       didClick = true;
+      delay(40);
     }
-    if (voltageReading < 29 && didClick == false) {
-      Mouse.press(MOUSE_RIGHT);
-      didClick = true;
+    if (voltageReading < 30 && didClick == false) {
+      while (analogRead(sensorPin) < 30);
+      delay(500);
+
+      if (analogRead(sensorPin) < 30) {
+
+        Keyboard.press(KEY_LEFT_ALT);
+        Keyboard.write('s');
+        delay(100);
+        Keyboard.releaseAll();
+        didClick = true;
+      }
+      else if (analogRead(sensorPin) > 33) {
+        scrollMode = !scrollMode;
+        didClick = true;      
+      } else {
+
+        Mouse.click(MOUSE_RIGHT);
+        didClick = true;
+      }
+      
+      delay(40);
     }
+
+    
   }
   
    
-  // read the switch:
-  int switchState = HIGH;
-  // if it's changed and it's high, toggle the mouse state:
-  if (switchState != lastSwitchState) {
-    if (switchState == HIGH) {
-      mouseIsActive = !mouseIsActive;
-      // turn on LED to indicate mouse state:
-      digitalWrite(ledPin, mouseIsActive);
-    }
-  }
-  // save switch state for next comparison:
-  lastSwitchState = switchState;
 
-  // read and scale the two axes:
   int xReading = readAxis(A1);
-  int yReading = readAxis(A2);
+  int yReading = readAxis(A2) * -1;
 
   // if the mouse control state is active, move the mouse:
-  if (mouseIsActive) {
+
+  Serial.println(yReading);
+  if (scrollMode == false) {
     Mouse.move(xReading, yReading, 0);
   }
-
-  // read the mouse button and click or not click:
-  // if the mouse button is pressed:
-  if (digitalRead(mouseButton) == HIGH) {
-    // if the mouse is not pressed, press it:
-    if (!Mouse.isPressed(MOUSE_LEFT)) {
-      Mouse.press(MOUSE_LEFT);
-    }
-  }
-  // else the mouse button is not pressed:
   else {
-    // if the mouse is pressed, release it:
-    if (Mouse.isPressed(MOUSE_LEFT)) {
-      Mouse.release(MOUSE_LEFT);
+    while (yReading > 0) {
+      Keyboard.press(KEY_DOWN_ARROW);
+      yReading = readAxis(A2) * -1;
     }
+    while (yReading < 0) {
+      Keyboard.press(KEY_UP_ARROW);
+      yReading = readAxis(A2) * -1;
+    }
+    Keyboard.releaseAll();
   }
+   
+  
 
   delay(responseDelay);
 }
